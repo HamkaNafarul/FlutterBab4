@@ -28,29 +28,29 @@ class _MyAppState extends State<MyApp> {
   void onDropChange(Object? value) {
     return setState(() {
       selctDropdown = value.toString();
-      //  if (text1.text.isNotEmpty) {
-      //   switch (selctDropdown) {
-      //     case "Kelvin":
-      //       hasil = int.parse(text1.text) + 273;
+      if (text1.text.isNotEmpty) {
+        switch (selctDropdown) {
+          case "Kelvin":
+            hasil = int.parse(text1.text) + 273;
 
-      //       break;
+            break;
 
-      //     case "Reamur":
-      //       hasil = int.parse(text1.text) * 4 / 5;
-      //       break;
+          case "Reamur":
+            hasil = int.parse(text1.text) * 4 / 5;
+            break;
 
-      //     case "Fahrenheit":
-      //       hasil = int.parse(text1.text) * 9 / 5 + 32;
-      //       break;
-      //     default:
-      //   }
-      //   Riwayat.add("konversi " +
-      //       text1.text +
-      //       " Celcius Ke " +
-      //       selctDropdown +
-      //       " Hasil " +
-      //       hasil.toString());
-      // }
+          case "Fahrenheit":
+            hasil = int.parse(text1.text) * 9 / 5 + 32;
+            break;
+          default:
+        }
+        Riwayat.add("konversi Dari " +
+            text1.text +
+            " Celcius Ke " +
+            selctDropdown +
+            " Dengan Hasil " +
+            hasil.toString());
+      }
     });
   }
 
@@ -74,13 +74,15 @@ class _MyAppState extends State<MyApp> {
         }
         Riwayat.add("konversi " +
             text1.text +
-            " Celcius Ke " +
+            " Celsius Ke " +
             selctDropdown +
             " Hasil " +
             hasil.toString());
       }
     });
   }
+
+  double Val = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +95,17 @@ class _MyAppState extends State<MyApp> {
           padding: EdgeInsets.only(left: 10, top: 10),
           child: Column(
             children: [
-              InputSuhu(text1: text1),
+              Slider(
+                  value: Val,
+                  max: 100,
+                  divisions: 10,
+                  label: Val.round().toString(),
+                  onChanged: (double value) {
+                    setState(() {
+                      Val = value;
+                      text1.text = Val.toString();
+                    });
+                  }),
               DaftarSuhu(
                 selctDropdown: selctDropdown,
                 listSuhu: listSuhu,
@@ -120,7 +132,7 @@ class _MyAppState extends State<MyApp> {
                 height: 30,
               ),
               Text(
-                "History ",
+                "History Konversi ",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(
